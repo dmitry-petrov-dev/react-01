@@ -4,18 +4,39 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 const Dialogs = (props) => {
-  const dialogElements = props.state.dialogs.map((dialog) => (
+  const dialogElements = props.dialogs.map((dialog) => (
     <DialogItem name={dialog.name} id={dialog.id} />
   ));
 
-  const messagesElements = props.state.messages.map((message) => (
+  const messagesElements = props.messages.map((message) => (
     <Message message={message.message} />
   ));
 
+  const onAddMessage = () => {
+    props.addMessage();
+  };
+
+  const onMessageChange = (e) => {
+    const text = e.currentTarget.value;
+    props.updateNewMessageText(text);
+  };
   return (
     <div className={classes.dialogs}>
       <div className={classes.dialogsItems}>{dialogElements}</div>
-      <div className={classes.messages}> {messagesElements}</div>
+
+      <div>
+        <div className={classes.messages}> {messagesElements}</div>
+        <div>
+          <textarea
+            onChange={onMessageChange}
+            value={props.newMessageText}
+            placeholder="Enter message"
+          />
+        </div>
+        <div>
+          <button onClick={onAddMessage}>Send</button>
+        </div>
+      </div>
     </div>
   );
 };
