@@ -4,11 +4,11 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 const Dialogs = (props) => {
-  const dialogElements = props.dialogs.map((dialog) => (
+  const dialogElements = props.dialogsPage.dialogs.map((dialog) => (
     <DialogItem name={dialog.name} id={dialog.id} />
   ));
 
-  const messagesElements = props.messages.map((message) => (
+  const messagesElements = props.dialogsPage.messages.map((message) => (
     <Message message={message.message} />
   ));
 
@@ -29,7 +29,7 @@ const Dialogs = (props) => {
         <div>
           <textarea
             onChange={onMessageChange}
-            value={props.newMessageText}
+            value={props.dialogsPage.newMessageText}
             placeholder="Enter message"
           />
         </div>

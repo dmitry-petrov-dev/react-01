@@ -1,12 +1,12 @@
-import { combineReducers, configureStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 
-const reducers = combineReducers({
-  profilePage: profileReducer,
-  dialogsPage: dialogsReducer,
+const store = configureStore({
+  reducer: {
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
+  },
 });
-
-const store = configureStore(reducers);
 
 export default store;
