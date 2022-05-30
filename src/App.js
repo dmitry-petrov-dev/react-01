@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -17,7 +17,16 @@ const App = (props) => {
       <Navbar />
       <div className="app-wrapper-content">
         <Routes>
-          <Route path="/profile" element={<Profile store={props.store} />} />
+          <Route
+            path="/profile/"
+            element={<ProfileContainer store={props.store} />}
+          >
+            {" "}
+            <Route
+              path=":profileId"
+              element={<ProfileContainer store={props.store} />}
+            />
+          </Route>
           <Route
             path="/dialogs/*"
             element={<DialogsContainer store={props.store} />}
