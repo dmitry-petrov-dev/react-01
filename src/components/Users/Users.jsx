@@ -33,6 +33,7 @@ const Users = (props) => {
                 <img
                   src={user.photos.small ? user.photos.small : userAvatar}
                   className={classes.userPhoto}
+                  alt="Profile"
                 />
               </NavLink>
             </div>
