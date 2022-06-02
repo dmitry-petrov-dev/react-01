@@ -1,28 +1,22 @@
 import React from "react";
-import Preloader from "../../../common/Preloader/Preloader";
 import classes from "./ProfileInfo.module.css";
+import Preloader from "../../../common/Preloader/Preloader";
+import userAvatar from "./../../../../assets/images/avatar-default.png";
 import ProfileStatus from "./ProfileStatus";
 
-const ProfileInfo = (props) => {
-  if (!props.profile) {
+const ProfileInfo = ({ profile, status, updateUserStatus, props }) => {
+  if (!profile) {
     return <Preloader />;
   }
   return (
     <div>
-      <div className={classes.profileHeader}>
-        {/* <img
-          src="https://www.gettyimages.pt/gi-resources/images/Homepage/Hero/PT/PT_hero_42_153645159.jpg"
-          alt="picture"
-        /> */}
-      </div>
-
       <div className={classes.descriptionBlock}>
-        <img src={props.profile.photos.large} alt="Profile" />
-        {props.profile ? props.profile.aboutMe : "ava + description"}
-        <ProfileStatus
-          status={props.status}
-          updateUserStatus={props.updateUserStatus}
+        <img
+          src={profile.photos.large ? profile.photos.large : userAvatar}
+          alt="Profile"
         />
+        {profile ? profile.aboutMe : "ava + description"}
+        <ProfileStatus status={status} updateUserStatus={updateUserStatus} />
       </div>
     </div>
   );

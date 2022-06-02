@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import classes from "./Header.module.css";
 
-const Header = (props) => {
+const Header = ({ isAuth, login, logout, props }) => {
   return (
     <header className={classes.header}>
       <img
@@ -10,10 +10,9 @@ const Header = (props) => {
         alt="logo"
       />
       <div className={classes.loginBlock}>
-        {props.isAuth ? (
+        {isAuth ? (
           <div>
-            {props.login}{" "}
-            <i className={classes.ggLogOut} onClick={props.logout} />
+            {login} <i className={classes.ggLogOut} onClick={logout} />
           </div>
         ) : (
           <NavLink to="/login">Login</NavLink>

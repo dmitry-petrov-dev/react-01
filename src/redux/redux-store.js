@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { reducer as formReducer } from "redux-form";
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
-import { reducer as formReducer } from "redux-form";
 import appReducer from "./app-reducer";
 
 const store = configureStore({

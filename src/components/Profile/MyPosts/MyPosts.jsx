@@ -10,18 +10,16 @@ import { Textarea } from "../../common/FormsControls/FormsControls";
 
 const maxLength10 = maxLengthCreator(10);
 
-const MyPosts = (props) => {
-  const postElements = props.posts.map((post) => (
-    <Post message={post.message} />
-  ));
+const MyPosts = ({ posts, addPost, props }) => {
+  const postElements = posts.map((post) => <Post message={post.message} />);
 
   const addNewPost = (values) => {
-    props.addPost(values.newPost);
+    addPost(values.newPost);
   };
 
   return (
     <div className={classes.postsBlock}>
-      <h3> My posts</h3>
+      <h3>My posts</h3>
       <div>
         <AddNewPostFormRedux onSubmit={addNewPost} />
       </div>
@@ -30,9 +28,9 @@ const MyPosts = (props) => {
   );
 };
 
-const AddNewPostForm = (props) => {
+const AddNewPostForm = ({ handleSubmit, props }) => {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
         <Field
           component={Textarea}

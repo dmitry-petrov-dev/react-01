@@ -1,22 +1,21 @@
 import React, { Component } from "react";
+import { initializeApp } from "./redux/app-reducer";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Navbar from "./components/Navbar/Navbar";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
+import Navbar from "./components/Navbar/Navbar";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import UsersContainer from "./components/Users/UsersContainer";
 import Login from "./components/Login/Login";
-import { initializeApp } from "./redux/app-reducer";
-import { compose } from "redux";
 import WithRouter from "./components/common/Router/WithRouter";
-import { connect } from "react-redux";
 import Preloader from "./components/common/Preloader/Preloader";
 
-//const App = (props) => {
 class App extends Component {
   componentDidMount() {
     this.props.initializeApp();

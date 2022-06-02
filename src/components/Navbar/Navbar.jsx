@@ -1,58 +1,16 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { createNavLink } from "../common/FormsControls/FormsControls";
 import classes from "./Navbar.module.css";
 
 const Navbar = () => {
   return (
     <nav className={classes.nav}>
-      <div className={classes.item}>
-        <NavLink
-          className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/profile"
-        >
-          Profile
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink
-          className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/dialogs"
-        >
-          Messages
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink
-          className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/news"
-        >
-          News
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink
-          className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/music"
-        >
-          Music
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink
-          className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/settings"
-        >
-          Settings
-        </NavLink>
-      </div>
-      <div className={classes.item}>
-        <NavLink
-          className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/users"
-        >
-          Users
-        </NavLink>
-      </div>
+      {createNavLink("/profile", "Profile")}
+      {createNavLink("/dialogs", "Messages")}
+      {createNavLink("/news", "News")}
+      {createNavLink("/music", "Music")}
+      {createNavLink("/settings", "Settings")}
+      {createNavLink("/users", "Users")}
     </nav>
   );
 };
