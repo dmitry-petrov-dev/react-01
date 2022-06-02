@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import TestRenderer from "react-test-renderer";
+import React from "react";
+import MyApp from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test("render check div existing", () => {
+  const testRenderer = TestRenderer.create(<MyApp />);
+  const testInstance = testRenderer.root;
+  expect(testInstance.findByType("div")).toBeDefined();
 });

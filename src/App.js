@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { initializeApp } from "./redux/app-reducer";
+import store from "./redux/redux-store";
 import { compose } from "redux";
-import { connect } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Provider, connect } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -52,7 +53,19 @@ const mapsStateToProps = (state) => ({
   initialized: state.app.initialized,
 });
 
-export default compose(
+const AppContainer = compose(
   WithRouter,
   connect(mapsStateToProps, { initializeApp })
 )(App);
+
+const MyApp = (props) => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </BrowserRouter>
+  );
+};
+
+export default MyApp;
