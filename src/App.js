@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { initializeApp } from "./redux/app-reducer";
 import store from "./redux/redux-store";
 import { compose } from "redux";
@@ -6,8 +6,8 @@ import { Provider, connect } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+//import ProfileContainer from "./components/Profile/ProfileContainer";
+//import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import Navbar from "./components/Navbar/Navbar";
 import News from "./components/News/News";
@@ -16,6 +16,13 @@ import Settings from "./components/Settings/Settings";
 import Login from "./components/Login/Login";
 import WithRouter from "./components/common/Router/WithRouter";
 import Preloader from "./components/common/Preloader/Preloader";
+
+const ProfileContainer = lazy(() =>
+  import("./components/Profile/ProfileContainer")
+);
+const DialogsContainer = lazy(() =>
+  import("./components/Dialogs/DialogsContainer")
+);
 
 class App extends Component {
   componentDidMount() {
@@ -32,17 +39,21 @@ class App extends Component {
         <HeaderContainer />
         <Navbar />
         <div className="app-wrapper-content">
-          <Routes>
-            <Route path="/profile/" element={<ProfileContainer />}>
-              <Route path=":profileId" element={<ProfileContainer />} />
-            </Route>
-            <Route path="/dialogs/*" element={<DialogsContainer />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/music" element={<Music />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/users" element={<UsersContainer />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          <Suspense fallback={<div>Loading ... </div>}>
+            <Routes>
+              <Route path="/profile/" element={<ProfileContainer />}>
+                <Route path=":profileId" element={<ProfileContainer />} />
+              </Route>
+
+              <Route path="/dialogs/*" element={<DialogsContainer />} />
+
+              <Route path="/news" element={<News />} />
+              <Route path="/music" element={<Music />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/users" element={<UsersContainer />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </Suspense>
         </div>
       </div>
     );
@@ -60,7 +71,7 @@ const AppContainer = compose(
 
 const MyApp = (props) => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Provider store={store}>
         <AppContainer />
       </Provider>
