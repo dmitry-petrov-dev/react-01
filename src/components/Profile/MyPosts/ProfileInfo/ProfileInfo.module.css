@@ -1,5 +1,5 @@
 .profileHeader img {
-  width: 600px;
+  max-width: 200px;
 }
 .descriptionBlock {
   padding: 10px;
