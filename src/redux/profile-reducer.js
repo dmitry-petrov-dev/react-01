@@ -1,0 +1,135 @@
+import { usersAPI, profileAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
+
+const ADD_POST = "myapp/profile/ADD-POST";
+const DELETE_POST = "myapp/profile/DELETE_POST";
+const SET_USER_PROFILE = "myapp/profile/SET_USER_PROFILE";
+const SET_USER_STATUS = "myapp/profile/SET_USER_STATUS";
+const SAVE_PHOTO_SUCCESS = "myapp/profile/SAVE_PHOTO_SUCCESS";
+
+const initialState = {
+  posts: [
+    { id: 1, message: "Hello, World!", likesCount: 12 },
+    { id: 2, message: "second post", likesCount: 10 },
+    { id: 3, message: "third post", likesCount: 5 },
+  ],
+  profile: {
+    aboutMe: null,
+    contacts: {
+      facebook: null,
+      website: null,
+      vk: null,
+      twitter: null,
+      instagram: null,
+      youtube: null,
+      github: null,
+      mainLink: null,
+    },
+    lookingForAJob: false,
+    lookingForAJobDescription: null,
+    fullName: null,
+    userId: null,
+    photos: { small: null, large: null },
+  },
+  status: null,
+};
+
+const profileReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case ADD_POST:
+      return {
+        ...state,
+        posts: [
+          ...state.posts,
+          {
+            id: 5,
+            message: action.newPostText,
+            likesCount: 0,
+          },
+        ],
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== action.postId),
+      };
+    case SET_USER_PROFILE:
+      return { ...state, profile: action.profile };
+    case SET_USER_STATUS:
+      return { ...state, status: action.status };
+    case SAVE_PHOTO_SUCCESS:
+      return { ...state, profile: { ...state.profile, photos: action.photos } };
+    default:
+      return state;
+  }
+};
+
+export const addPostActionCreator = (newPostText) => ({
+  type: ADD_POST,
+  newPostText,
+});
+
+export const deletePostActionCreator = (postId) => ({
+  type: DELETE_POST,
+  postId,
+});
+
+export const setUserProfile = (profile) => ({
+  type: SET_USER_PROFILE,
+  profile,
+});
+
+export const setUserStatus = (status) => ({
+  type: SET_USER_STATUS,
+  status,
+});
+
+export const savePhotoSuccess = (photos) => ({
+  type: SAVE_PHOTO_SUCCESS,
+  photos,
+});
+
+export const addPost = (newPost) => (dispatch) => {
+  dispatch(addPostActionCreator(newPost));
+};
+
+export const getUserProfile = (profileId) => async (dispatch) => {
+  const response = await usersAPI.getProfile(profileId);
+  dispatch(setUserProfile(response.data));
+};
+
+export const getUserStatus = (profileId) => async (dispatch) => {
+  const response = await profileAPI.getStatus(profileId);
+  dispatch(setUserStatus(response.data));
+};
+
+export const updateUserStatus = (status) => async (dispatch) => {
+  const response = await profileAPI.updateStatus(status);
+  if (!response.data.data.resultCode) {
+    dispatch(setUserStatus(status));
+  }
+};
+
+export const savePhoto = (file) => async (dispatch) => {
+  const response = await profileAPI.savePhoto(file);
+  if (!response.data.resultCode) {
+    dispatch(savePhotoSuccess(response.data.data.photos));
+  }
+};
+
+export const saveProfile = (profile) => async (dispatch, getState) => {
+  const userId = getState().auth.userId;
+  const response = await profileAPI.saveProfile(profile);
+  if (!response.data.resultCode) {
+    dispatch(getUserProfile(userId));
+  } else {
+    dispatch(
+      stopSubmit("edit-profile", {
+        _error: response.data.messages[0],
+      })
+    );
+    return Promise.reject(response.data.messages[0]);
+  }
+};
+
+export default profileReducer;
