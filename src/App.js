@@ -3,7 +3,7 @@ import { initializeApp } from "./redux/app-reducer";
 import store from "./redux/redux-store";
 import { compose } from "redux";
 import { Provider, connect } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import HeaderContainer from "./components/Header/HeaderContainer";
 //import ProfileContainer from "./components/Profile/ProfileContainer";
@@ -41,6 +41,7 @@ class App extends Component {
         <div className="app-wrapper-content">
           <Suspense fallback={<div>Loading ... </div>}>
             <Routes>
+              <Route path="/" element={<Navigate to={"/profile"} />} />
               <Route path="/profile/" element={<ProfileContainer />}>
                 <Route path=":profileId" element={<ProfileContainer />} />
               </Route>
@@ -52,6 +53,7 @@ class App extends Component {
               <Route path="/settings" element={<Settings />} />
               <Route path="/users" element={<UsersContainer />} />
               <Route path="/login" element={<Login />} />
+              <Route path="*" element={<div>404 - Page not found</div>} />
             </Routes>
           </Suspense>
         </div>

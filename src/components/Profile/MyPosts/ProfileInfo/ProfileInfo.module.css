@@ -1,6 +1,10 @@
-.profileHeader img {
+.mainPhoto {
   max-width: 200px;
 }
 .descriptionBlock {
   padding: 10px;
+}
+
+.contact {
+  padding-left: 10px;
 }

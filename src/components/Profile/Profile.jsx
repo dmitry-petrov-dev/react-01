@@ -9,6 +9,7 @@ const Profile = ({
   store,
   updateUserStatus,
   savePhoto,
+  saveProfile,
   props,
 }) => {
   return (
@@ -19,6 +20,7 @@ const Profile = ({
         status={status}
         updateUserStatus={updateUserStatus}
         savePhoto={savePhoto}
+        saveProfile={saveProfile}
       />
       <MyPostsContainer store={store} />
     </div>

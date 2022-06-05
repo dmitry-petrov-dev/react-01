@@ -24,6 +24,8 @@ const ProfileStatus = (props) => {
     <div>
       {!editMode && (
         <div>
+          {" "}
+          <b>Status</b>:
           <span onDoubleClick={activateEditMode}>
             {props.status || "Enter status"}
           </span>
@@ -31,6 +33,8 @@ const ProfileStatus = (props) => {
       )}
       {editMode && (
         <div>
+          <b>Status</b>
+          :
           <input
             onChange={onStatusChange}
             autoFocus={true}
